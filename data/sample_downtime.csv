@@ -1,1 +1,7 @@
-
+Line,Clio_4_HB,Clio_4_SW,Clio_5,Megane_4,Rework_Units,Planned_Time_Min
+Underbody,150,50,200,80,5,480
+Bodyside_1,140,45,190,75,8,480
+Bodyside_2,145,48,195,78,4,480
+Doors_Connection,138,44,188,74,12,480
+Main_Connection,140,45,190,75,10,480
+Rework_Final,135,42,185,72,2,480
