@@ -1,3 +1,5 @@
+#TEMPLATE#
+
 # 📘 OEE Calculation for BIW Production Lines (Renault Models) #
 
 This repository provides a complete framework for calculating and analyzing Overall Equipment Effectiveness (OEE) across Body‑in‑White (BIW) production lines manufacturing multiple Renault vehicle models.
