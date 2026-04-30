@@ -11,6 +11,8 @@ The BIW shop produces four Renault models:
 - Clio 5
 - Megane 4
 
+<img width="1536" height="1024" alt="Copilot_20260430_145501" src="https://github.com/user-attachments/assets/7d4e3dc4-1025-4099-93d7-6a29c19d46b6" />
+
 The production architecture includes:
 - 1 Underbody line
 - 2 Bodyside lines
