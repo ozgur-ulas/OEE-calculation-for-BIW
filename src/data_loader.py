@@ -8,5 +8,7 @@ def load_all_data():
     # Merge downtime duration into production for OEE calculation
     total_downtime = downtime.groupby('Line')['Duration_Min'].sum().reset_index()
     df = pd.merge(production, total_downtime, on='Line', how='left').fillna(0)
+
+    print('production loss')
     
     return df, cycle_times
