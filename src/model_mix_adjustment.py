@@ -13,3 +13,5 @@ def calculate_weighted_cycle_time(row, ideal_times):
         
     weighted_ideal_ct = total_theoretical_seconds / total_units if total_units > 0 else 0
     return weighted_ideal_ct, total_units, total_theoretical_seconds
+
+print ('ideal_ct')
