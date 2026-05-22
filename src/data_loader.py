@@ -10,5 +10,7 @@ def load_all_data():
     df = pd.merge(production, total_downtime, on='Line', how='left').fillna(0)
 
     print('production loss')
+    print('OEE')
+    print('yield')
     
     return df, cycle_times
