@@ -1,17 +1,23 @@
-def calculate_weighted_cycle_time(row, ideal_times):
-    """
-    Calculates the total theoretical time required for a specific mix.
-    Formula: Sum(Units_model_i * Ideal_CT_model_i)
-    """
-    total_theoretical_seconds = 0
-    total_units = 0
-    
-    for model, ideal_ct in ideal_times.items():
-        units = row[model]
-        total_theoretical_seconds += (units * ideal_ct)
-        total_units += units
-        
-    weighted_ideal_ct = total_theoretical_seconds / total_units if total_units > 0 else 0
-    return weighted_ideal_ct, total_units, total_theoretical_seconds
+import pandas as pd
 
-print ('ideal_ct')
+class ModelMixAdjuster:
+    def __init__(self, ideal_cycle_times: dict):
+        self.ideal_cycle_times = ideal_cycle_times
+
+    def calculate_weighted_ideal_time(self, shift_production_df: pd.DataFrame) -> float:
+        """
+        Calculates the dynamically blended target cycle time for a mixed run.
+        Formula: Sum(Units_m * Ideal_Time_m) / Total_Units
+        """
+        total_units = shift_production_df['total_produced'].sum()
+        if total_units == 0:
+            return 0.0
+
+        weighted_time_sum = 0.0
+        for _, row in shift_production_df.iterrows():
+            model = row['model_name']
+            units = row['total_produced']
+            ideal_time = self.ideal_cycle_times.get(model, 60.0) # Default 60s fallback
+            weighted_time_sum += (units * ideal_time)
+
+        return weighted_time_sum / total_units
