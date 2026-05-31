@@ -1,28 +1,40 @@
 import matplotlib.pyplot as plt
 
-def plot_line_performance(oee_df):
-    """Generates a bar chart comparing OEE across different BIW lines."""
-    plt.figure(figsize=(10, 6))
-    lines = oee_df['Line']
-    oee_values = oee_df['OEE']
-    
-    colors = ['green' if x > 85 else 'orange' if x > 70 else 'red' for x in oee_values]
-    
-    plt.bar(lines, oee_values, color=colors)
-    plt.axhline(y=85, color='blue', linestyle='--', label='World Class OEE (85%)')
-    
-    plt.title('BIW Production Line OEE Comparison', fontsize=14)
-    plt.ylabel('OEE %')
-    plt.ylim(0, 100)
-    plt.legend()
-    plt.grid(axis='y', alpha=0.3)
-    
-    plt.savefig('oee_comparison.png')
-    print("Graph saved as oee_comparison.png")
-    plt.show()
+class BIWVisualizer:
+    @staticmethod
+    def plot_oee_losses(metrics: dict, save_path: str = "reports/loss_breakdown.png"):
+        """
+        Generates a clean breakdown visualization showing the degradation path 
+        from ideal 100% efficiency to the actual current line OEE.
+        """
+        labels = ['Availability', 'Performance', 'Quality', 'Overall OEE']
+        # Convert ratios to standard display percentages
+        values = [
+            metrics['Availability'] * 100,
+            metrics['Performance'] * 100,
+            metrics['Quality'] * 100,
+            metrics['OEE'] * 100
+        ]
 
-# Run visualization if executed directly
-if __name__ == "__main__":
-    from oee_calculator import calculate_oee
-    df = calculate_oee()
-    plot_line_performance(df)
+        plt.figure(figsize=(8, 5))
+        colors = ['#2b5c8f', '#4682b4', '#60a3bc', '#e55039']
+        
+        bars = plt.bar(labels, values, color=colors, width=0.5)
+        plt.ylim(0, 105)
+        plt.ylabel("Efficiency Percentage (%)")
+        plt.title(f"BIW Line Performance Profiling - Line ID: {metrics.get('Line Name', 'Unknown')}")
+        plt.grid(axis='y', linestyle='--', alpha=0.5)
+
+        # Draw values clearly on top of the bars
+        for bar in bars:
+            height = bar.get_height()
+            plt.annotate(f'{height:.1f}%',
+                         xy=(bar.get_x() + bar.get_width() / 2, height),
+                         xytext=(0, 3),  
+                         textcoords="offset points",
+                         ha='center', va='bottom', fontweight='bold')
+
+        plt.tight_layout()
+        plt.savefig(save_path)
+        plt.close()
+        print(f"OEE analytical loss visualization saved directly to: {save_path}")
